@@ -1,0 +1,12 @@
+com\exemplo\garagem\filters\AuthFilter.class
+com\exemplo\garagem\models\Usuario.class
+com\exemplo\garagem\AppInitializer.class
+com\exemplo\garagem\dao\DBConnection.class
+com\exemplo\garagem\filters\EncodingFilter.class
+com\exemplo\garagem\models\Veiculo.class
+com\exemplo\garagem\controllers\AuthController.class
+com\exemplo\garagem\dao\VeiculoDAO.class
+com\exemplo\garagem\controllers\VeiculoController.class
+com\exemplo\garagem\dao\UsuarioDAO.class
+com\exemplo\garagem\controllers\AuthController$Credenciais.class
+com\exemplo\garagem\controllers\AuthStatusServlet.class
