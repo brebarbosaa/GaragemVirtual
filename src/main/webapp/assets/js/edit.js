@@ -1,59 +1,67 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const veiculoId = urlParams.get("id");
+// edit.js
+import { fetchWithAuth, showError } from './utils.js';
 
-    const form = document.getElementById("edit-form");
-    const marcaInput = document.getElementById("marca");
-    const modeloInput = document.getElementById("modelo");
-    const anoInput = document.getElementById("ano");
-    const placaInput = document.getElementById("placa");
-
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const veiculoId = params.get('id');
     if (!veiculoId) {
-        alert("Veículo não especificado.");
+        showError('ID do veículo não fornecido.');
         return;
     }
 
-    // Carregar dados do veículo
     try {
-        const response = await fetch(`http://localhost:3000/veiculos/${veiculoId}`);
-        const veiculo = await response.json();
-
-        marcaInput.value = veiculo.marca;
-        modeloInput.value = veiculo.modelo;
-        anoInput.value = veiculo.ano;
-        placaInput.value = veiculo.placa;
-    } catch (error) {
-        console.error("Erro ao carregar veículo:", error);
-    }
-
-    // Enviar atualização
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const dadosAtualizados = {
-            marca: marcaInput.value,
-            modelo: modeloInput.value,
-            ano: parseInt(anoInput.value),
-            placa: placaInput.value
-        };
-
-        try {
-            const response = await fetch(`http://localhost:3000/veiculos/${veiculoId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dadosAtualizados)
-            });
-
-            if (response.ok) {
-                alert("Veículo atualizado com sucesso!");
-                window.location.href = "list.html";
-            } else {
-                alert("Erro ao atualizar veículo.");
-            }
-        } catch (error) {
-            console.error("Erro ao enviar atualização:", error);
+        const response = await fetchWithAuth(`/api/veiculos/${veiculoId}`, {
+            method: 'GET'
+        });
+        if (!response.ok) {
+            showError('Erro ao carregar dados do veículo.');
+            return;
         }
-    });
+        const veiculo = await response.json();
+        document.getElementById('marca').value = veiculo.marca;
+        document.getElementById('modelo').value = veiculo.modelo;
+        document.getElementById('ano').value = veiculo.ano;
+        document.getElementById('placa').value = veiculo.placa;
+    } catch (error) {
+        showError('Erro ao carregar dados do veículo.');
+        console.error(error);
+    }
 });
+
+document.getElementById('veiculo-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    const veiculoId = params.get('id');
+
+    const veiculo = {
+        marca: document.getElementById('marca').value,
+        modelo: document.getElementById('modelo').value,
+        ano: parseInt(document.getElementById('ano').value, 10),
+        placa: document.getElementById('placa').value
+    };
+
+    try {
+        const response = await fetchWithAuth(`/api/veiculos/${veiculoId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(veiculo)
+        });
+        if (response.ok) {
+            window.location.href = '/veiculos/list.html';
+        } else {
+            showError('Erro ao atualizar veículo.');
+        }
+    } catch (error) {
+        showError(error.message || 'Erro ao atualizar veículo');
+        console.error(error);
+    }
+});
+
+// Logout
+document.getElementById('btn-logout').addEventListener('click', async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    window.location.href = '/index.html';
+});
+
