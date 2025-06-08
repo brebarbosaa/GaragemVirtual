@@ -1,41 +1,124 @@
-<!-- edit.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Editar Veículo</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .edit-form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 30px auto;
+            border: 1px solid #e0e0e0;
+        }
+
+        .navbar-custom {
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .navbar-custom .navbar-brand {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            color: #333;
+            background-color: transparent;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-logout:hover {
+            background-color: #f5f5f5;
+        }
+
+        .btn-outline-light {
+            color: #333;
+            border-color: #e0e0e0;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #f5f5f5;
+        }
+
+        .form-control {
+            border: 1px solid #e0e0e0;
+            background-color: #fafafa;
+        }
+
+        .form-control:focus {
+            border-color: #b0b0b0;
+            box-shadow: none;
+            background-color: #fff;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 <body>
-<header>
-    <h1>Garagem Virtual</h1>
-    <nav>
-        <a href="/veiculos/list.html" class="btn">Voltar</a>
-        <button id="btn-logout">Sair</button>
-    </nav>
-</header>
-<main>
-    <h2>Editar Veículo</h2>
-    <form id="veiculo-form">
-        <div class="form-group">
-            <label for="marca">Marca:</label>
-            <input type="text" id="marca" required>
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Garagem Virtual</a>
+        <div class="d-flex">
+            <a href="/veiculos/list.html" class="btn btn-outline-light me-2">Voltar</a>
+            <button id="btn-logout" class="btn btn-logout">Sair</button>
         </div>
-        <div class="form-group">
-            <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" required>
-        </div>
-        <div class="form-group">
-            <label for="ano">Ano:</label>
-            <input type="number" id="ano" min="1900" max="2099" required>
-        </div>
-        <div class="form-group">
-            <label for="placa">Placa:</label>
-            <input type="text" id="placa" required>
-        </div>
-        <button type="submit">Salvar Alterações</button>
-    </form>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="edit-form-container">
+        <h2 class="text-center">Editar Veículo</h2>
+
+        <form id="veiculo-form">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="marca" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="modelo" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="ano" class="form-label">Ano</label>
+                    <input type="number" class="form-control" id="ano" min="1900" max="2099" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input type="text" class="form-control" id="placa" required>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg mt-3">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/edit.js" type="module"></script>
 </body>
 </html>
