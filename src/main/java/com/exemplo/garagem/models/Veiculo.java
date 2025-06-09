@@ -1,13 +1,13 @@
 package com.exemplo.garagem.models;
 
 public class Veiculo {
-    private int id;
+    private Integer id;
     private String marca;
     private String modelo;
     private int ano;
     private String placa;
 
-    public Veiculo(int id, String marca, String modelo, int ano, String placa) {
+    public Veiculo(Integer id, String marca, String modelo, int ano, String placa) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -18,11 +18,11 @@ public class Veiculo {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

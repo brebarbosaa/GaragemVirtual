@@ -3,6 +3,7 @@ package com.exemplo.garagem.controllers;
 import com.exemplo.garagem.dao.VeiculoDAO;
 import com.exemplo.garagem.models.Veiculo;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -91,7 +92,17 @@ public class VeiculoController extends HttpServlet {
             }
             String payload = buffer.toString();
 
-            Veiculo veiculo = gson.fromJson(payload, Veiculo.class);
+            System.out.println("Payload recebido: " + payload);
+
+            Veiculo veiculo = null;
+            try {
+                veiculo = gson.fromJson(payload, Veiculo.class);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "JSON inválido: " + e.getMessage());
+                return;
+            }
+
             veiculoDAO.criar(veiculo, usuarioId);
 
             response.setStatus(HttpServletResponse.SC_CREATED);
@@ -101,6 +112,7 @@ public class VeiculoController extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
